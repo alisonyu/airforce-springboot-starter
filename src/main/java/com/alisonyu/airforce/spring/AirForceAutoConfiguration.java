@@ -1,10 +1,10 @@
 package com.alisonyu.airforce.spring;
 
-import com.alisonyu.airforce.common.AirForceBuilder;
-import com.alisonyu.airforce.microservice.AirforceVerticle;
-import com.alisonyu.airforce.microservice.core.exception.ExceptionHandler;
-import com.alisonyu.airforce.microservice.router.RouterMounter;
-import com.alisonyu.airforce.microservice.service.provider.ServiceProvider;
+import com.alisonyu.airforce.core.AirForceBuilder;
+import com.alisonyu.airforce.core.AirForceVerticle;
+import com.alisonyu.airforce.web.exception.ExceptionHandler;
+import com.alisonyu.airforce.web.router.RouterMounter;
+import com.alisonyu.airforce.microservice.provider.ServiceProvider;
 import com.google.common.collect.Lists;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
@@ -70,8 +70,8 @@ public class AirForceAutoConfiguration implements ApplicationContextAware {
         builder.restExceptionHandler(Lists.newArrayList(handlerMap.values()));
 
         //get all prototype rest verticle from container
-        Map<String, AirforceVerticle> verticles = applicationContext.getBeansOfType(AirforceVerticle.class);
-        Set<Class<? extends AirforceVerticle>> classSet = verticles.values()
+        Map<String, AirForceVerticle> verticles = applicationContext.getBeansOfType(AirForceVerticle.class);
+        Set<Class<? extends AirForceVerticle>> classSet = verticles.values()
                 .stream()
                 .map(v -> v.getClass())
                 .distinct()
@@ -84,7 +84,7 @@ public class AirForceAutoConfiguration implements ApplicationContextAware {
         Map<String,Object> serviceMap = applicationContext.getBeansWithAnnotation(ServiceProvider.class);
         List<Object> services = serviceMap.values()
                 .stream()
-                .filter(o -> !AirforceVerticle.class.isAssignableFrom(o.getClass()))
+                .filter(o -> !AirForceVerticle.class.isAssignableFrom(o.getClass()))
                 .collect(Collectors.toList());
         builder.publish(services);
 

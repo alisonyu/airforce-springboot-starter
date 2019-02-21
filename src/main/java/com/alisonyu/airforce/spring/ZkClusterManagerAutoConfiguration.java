@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Bean;
 
 public class ZkClusterManagerAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean(ClusterManager.class)
-    public ClusterManager clusterManager(){
-        return new ZookeeperClusterManager();
-    }
+//    @Bean
+//    @ConditionalOnMissingBean(ClusterManager.class)
+//    public ClusterManager clusterManager(){
+//        return new ZookeeperClusterManager();
+//    }
 
 }
